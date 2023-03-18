@@ -197,7 +197,7 @@ This command will start capturing network traffic on the eth0 interface. You can
 
 <!-- add a image from images folder -->
 
-The Question is can we ping from the container to the internet? The answer is yes. What would be the workflow? The workflow is the packet will be sent to the docker0 interface. The docker0 interface will send the packet to the host machine. The host machine will send the packet to the internet. So we can ping the internet from the container. Which Command we can use to ping the internet from the container? We can use the following command.
+**The Question is can we ping from the container to the internet? The answer is yes. What would be the workflow?**
 
 ```bash
 
@@ -208,4 +208,15 @@ ping 8.8.8.8
 
 ![image info](./images/11.png)
 
-<!-- add a image from images folder -->
+We can see the workflow by listing it.
+
+- First the packet will be sent to the `docker0` interface.
+- Then the `docker0` interface can't find the destination ip address in the same network.
+- So the `docker0` interface will send the packet to the host machine.
+- The host machine see the route table. and it says that the destination ip address is in the `8.8.8.8` network. The destination ip address is not maching with all the ip address in the route table. So the host machine will send the packet through the `eth0` interface. As a default gateway.
+- The `eth0` interface will send the packet to the internet.
+
+![image info](./images/8.png)
+
+So we can ping the container from the host machine. And we can ping the internet from the container.
+
