@@ -148,7 +148,64 @@ docker network ls
 We can see that we have three networks. One is the bridge network. One is the host network. One is the none network. We can see the bridge network by running the following command.
 
 ```bash
-docker network inspect bridge
+docker network inspect [network ID]
 ```
 
 ![image info](./images/7.png)
+
+<!-- add a image from images folder -->
+
+We can see the container ip address. So can we ping the container from the host machine? The answer is yes. But why we can ping the container from the host machine? How we can find the answer? We can find the answer by running the following command.
+
+```bash
+route -n
+```
+
+![image info](./images/8.png)
+
+<!-- add a image from images folder -->
+
+We can see here that the kernel route table. The Destination is the `172.17.0.0` and the Genmask is `255.255.0.0` and the Gateway is `0.0.0.0`. So when a packet comes to the host machine with prefix `172.17`. The packet will send to the dokcer0 interface. And the docker0 interface will send the packet to the container. So we can ping the container from the host machine.
+
+How can we validate the above statement? We can validate the above statement by running the following command.
+
+```bash
+docker exec -it [container ID] bash
+```
+
+![image info](./images/9.png)
+
+<!-- add a image from images folder -->
+
+Now we entered into the container world. We can install tcpdump by running the following command.
+
+```bash
+apt-get update
+apt-get install tcpdump
+```
+<!-- Describe The whole command with detail -->
+
+Now we can see the packet by running the following command.
+
+```bash
+tcpdump -i eth0
+```
+
+This command will start capturing network traffic on the eth0 interface. You can use this command to view packets as they are transmitted and received on the network interface. You can also add various options to customize the output of the command, such as filtering packets by source or destination IP address or by protocol.
+
+![image info](./images/10.png)
+
+<!-- add a image from images folder -->
+
+The Question is can we ping from the container to the internet? The answer is yes. What would be the workflow? The workflow is the packet will be sent to the docker0 interface. The docker0 interface will send the packet to the host machine. The host machine will send the packet to the internet. So we can ping the internet from the container. Which Command we can use to ping the internet from the container? We can use the following command.
+
+```bash
+
+apt-get update
+apt-get install iputils-ping
+ping 8.8.8.8    
+```
+
+![image info](./images/11.png)
+
+<!-- add a image from images folder -->
