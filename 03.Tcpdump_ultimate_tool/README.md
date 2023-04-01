@@ -121,25 +121,25 @@ tcpdump -nnSX port 443 -w https.pcap -i eth0
 
 This showed some HTTPS traffic, with a hex display visible on the right portion of the output (alas, it’s encrypted). Just remember—when in doubt, run the command above with the port you’re interested in, and you should be on your way.  
 
-## For everything on an interface, what is the command?
+## 2. For everything on an interface, what is the command?
 
 ```bash
 tcpdump -i eth0
 ```
 
-## Write The command to find Traffic by IP
+## 3. Write The command to find Traffic by IP
 
 ```bash
 tcpdump -nnSX host
 ```
 
-## Share the filtering by Source and/or Destination?
+## 4. Share the filtering by Source and/or Destination?
 
 ```bash
 tcpdump -nnSX src host
 ```
 
-## How to find Packets by Network, write the line
+## 5. How to find Packets by Network, write the line
 
 ```bash
 tcpdump -nnSX net
